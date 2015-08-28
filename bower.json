@@ -1,0 +1,21 @@
+{
+    "name": "jquery.form.monitoring",
+    "version": "0.0.0",
+    "homepage": "https://github.com/ateliee/jquery.form.monitoring",
+    "authors": [
+        "ateliee <ateliee@gmail.com>"
+    ],
+    "description": "form change",
+    "main": "js/jquery.form.monitoring.js",
+    "keywords": [
+        "jquery",
+        "plugin",
+        "form"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components"
+    ]
+}
