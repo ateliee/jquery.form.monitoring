@@ -7,7 +7,11 @@
             ajaxLoading : null,
             callback: null
         };
-        settings = $.extend(settings,options);
+        if((typeof options) == 'function'){
+            settings['callback'] = options;
+        }else{
+            settings = $.extend(settings,options);
+        }
         $self.settings = settings;
         $self.change = function(){
             if($self.settings['ajax']){
@@ -58,19 +62,33 @@
                 }
             }else{
                 if($self.settings['callback']) {
-                    $self.settings['callback']($self);
+                    $self.settings['callback'].apply(this, [$self]);
                 }
             }
         };
-        $(this).find('input,textarea').not('[type=checkbox],[type=radio],[type=date],[type=datetime]').on('keyup',function(){
+        var $lists = $(this).find('input,textarea,select');
+        if($(this).is('input,textarea,select')){
+            $lists = $(this);
+        }
+        $lists.filter('input,textarea').not('[type=checkbox],[type=radio],[type=date],[type=datetime]').on('monitoring.check',function(){
             var data = $(this).data('before.val');
-            if(!data || (data != $(this).val())){
+            if(data != $(this).val()){
                 $(this).data('before.val',$(this).val());
                 $self.change();
             }
+        }).on('keyup',function(){ $(this).trigger('monitoring.check'); }).each(function(){
+            $(this).data('before.val',$(this).val());
         });
-        $(this).find('select,input[type=checkbox],input[type=radio],input[type=date],input[type=datetime]').on('change',function(){
+        $lists.filter('select,input[type=checkbox],input[type=radio],input[type=date],input[type=datetime]').on('change',function(){
             $self.change();
         });
+
+        $self.interval = function(){
+            var time = setTimeout(function(){
+                $lists.trigger('monitoring.check');
+                $self.interval();
+            },300);
+        };
+        $self.interval();
     };
 })(jQuery);

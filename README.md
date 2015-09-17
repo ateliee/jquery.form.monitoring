@@ -13,6 +13,11 @@ form childs element change or keydown callback function.
             // callback change...
         }
     });
+    
+    // input change
+    $('#input').formMonitoring(function(){
+        //callback here
+    });
 ($));
 ```
 
@@ -24,4 +29,5 @@ form childs element change or keydown callback function.
         <option value="2">orange</option>
     </select>
 </form>
+<input id="input" value="">
 ```
