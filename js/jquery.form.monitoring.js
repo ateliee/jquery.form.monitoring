@@ -62,9 +62,10 @@
                 }
             }else{
                 if($self.settings['callback']) {
-                    $self.settings['callback'].apply(this, [$self]);
+                    return $self.settings['callback'].apply(this, [$self]);
                 }
             }
+            return true;
         };
         var $lists = $(this).find('input,textarea,select');
         if($(this).is('input,textarea,select')){
@@ -83,7 +84,6 @@
         });
         $lists.filter('select,input[type=checkbox],input[type=radio],input[type=date],input[type=datetime]').on('change',function(){
             if($self.change() !== false){
-                console.log($(this).val());
                 $(this).data('before.val',$(this).val());
             }
         });
