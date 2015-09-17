@@ -72,9 +72,10 @@
         }
         $lists.filter('input,textarea').not('[type=checkbox],[type=radio],[type=date],[type=datetime]').on('monitoring.check',function(){
             var data = $(this).data('before.val');
-            if(data != $(this).val()){
+            var val = $(this).val();
+            if(data != val){
                 if($self.change() !== false){
-                    $(this).data('before.val',$(this).val());
+                    $(this).data('before.val',val);
                 }
             }
         }).on('keyup',function(){ $(this).trigger('monitoring.check'); }).each(function(){
@@ -82,6 +83,7 @@
         });
         $lists.filter('select,input[type=checkbox],input[type=radio],input[type=date],input[type=datetime]').on('change',function(){
             if($self.change() !== false){
+                console.log($(this).val());
                 $(this).data('before.val',$(this).val());
             }
         });
