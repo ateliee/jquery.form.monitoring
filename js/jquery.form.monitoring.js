@@ -73,14 +73,17 @@
         $lists.filter('input,textarea').not('[type=checkbox],[type=radio],[type=date],[type=datetime]').on('monitoring.check',function(){
             var data = $(this).data('before.val');
             if(data != $(this).val()){
-                $(this).data('before.val',$(this).val());
-                $self.change();
+                if($self.change() !== false){
+                    $(this).data('before.val',$(this).val());
+                }
             }
         }).on('keyup',function(){ $(this).trigger('monitoring.check'); }).each(function(){
             $(this).data('before.val',$(this).val());
         });
         $lists.filter('select,input[type=checkbox],input[type=radio],input[type=date],input[type=datetime]').on('change',function(){
-            $self.change();
+            if($self.change() !== false){
+                $(this).data('before.val',$(this).val());
+            }
         });
 
         $self.interval = function(){
